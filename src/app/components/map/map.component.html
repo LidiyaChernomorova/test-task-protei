@@ -1,0 +1,11 @@
+<p>map works!</p>
+<div
+  *ngFor="let item of db"
+  (click)="selectOnMap(item)"
+  [ngClass]="{ nameSected: item.name == selectedItemName }"
+>
+  {{ item.name }}
+  <button *ngIf="item.name == selectedItemName" (click)="deleteOnMap(item)">
+    delele
+  </button>
+</div>

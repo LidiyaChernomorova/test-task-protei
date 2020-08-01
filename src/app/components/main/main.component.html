@@ -1,0 +1,14 @@
+<p>main</p>
+<app-list
+  [db]="db"
+  (selectedItem)="selectElem($event)"
+  (deletedItem)="deleteElem($event)"
+  [selectedItemName]="selectedItemName"
+></app-list>
+<app-map
+  [db]="db"
+  (selectedPoint)="selectElem($event)"
+  (deletedPoint)="deleteElem($event)"
+  [selectedItemName]="selectedItemName"
+></app-map>
+<button (click)="addPoint()">add</button>

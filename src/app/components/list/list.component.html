@@ -1,0 +1,10 @@
+<p>list works!</p>
+<div
+  *ngFor="let item of db"
+  (click)="selectOnList(item)"
+  [ngClass]="{ nameSected: item.name == selectedItemName }"
+>
+  {{ item.name }}
+  <button (click)="deleteOnList(item)"
+  *ngIf="item.name == selectedItemName">delele</button>
+</div>
