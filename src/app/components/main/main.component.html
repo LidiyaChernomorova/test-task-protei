@@ -4,11 +4,13 @@
   (selectedItem)="selectElem($event)"
   (deletedItem)="deleteElem($event)"
   [selectedItemName]="selectedItemName"
+  class="list-container"
 ></app-list>
 <app-map
   [db]="db"
   (selectedPoint)="selectElem($event)"
   (deletedPoint)="deleteElem($event)"
   [selectedItemName]="selectedItemName"
+  class="list-container"
 ></app-map>
 <button (click)="addPoint()">add</button>
