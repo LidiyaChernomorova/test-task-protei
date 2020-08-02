@@ -44,6 +44,10 @@ export class MainComponent implements OnInit {
   ngOnInit(): void {
     this.idGenerator = 3;
     this.map = this.mapCreatorService.initMap();
+    this.db.forEach((item, index) =>
+      this.createPoint(item, true, index)
+    )
+
   }
 
   clickOnMap(evt) {
@@ -53,40 +57,43 @@ export class MainComponent implements OnInit {
       const index = this.findIndexInDB(this.db, this.selectedId);
       this.selectElem(this.db[index]);
     } else {
-      this.createPoint(evt);
+      const lat = evt.latlng.lat;
+      const lng = evt.latlng.lng;
+      const id = this.idGenerator++;
+      const name = 'nana' + id;
+      const newPoint: Point = { name, id, lat, lng, marker: null };
+      this.createPoint(newPoint, false, null);
     }
   }
 
-  createPoint(evt) {
-    const lat = evt.latlng.lat;
-    const lng = evt.latlng.lng;
-    const id = this.idGenerator++;
-    const name = 'nana' + id;
-
-    const newMarker = new L.marker([lat, lng], { icon: this.icon, title: name })
+  createPoint(item, onInitStage, index) {
+    const newMarker = new L.marker([item.lat, item.lng], { icon: this.icon, title: name })
       .addTo(this.map)
-      .on('mouseup', e => { this.map.setView(e.target.getLatLng()); this.selectedId = id });
+      .on('mouseup', e => { this.map.setView(e.target.getLatLng()); this.selectedId = item.id; });
     this.map.addLayer(newMarker);
-
-    const newPoint: Point = { name, id, lat, lng, marker: newMarker };
-    this.db.push(newPoint);
+    item.marker = newMarker;
+    if (onInitStage) {
+      this.db[index].marker = newMarker;
+    } else {
+      this.db.push(item);
+    }
   }
 
-  selectElem(item: Point) {
-    this.selectedItemId = item.id;
-  }
+    selectElem(item: Point) {
+      this.selectedItemId = item.id;
+    }
 
-  deleteElem(item: Point) {
-    const index = this.findIndexInDB(this.db, item.id);
-    this.map.removeLayer(this.db[index].marker);
-    this.db.splice(index, 1);
-  }
+    deleteElem(item: Point) {
+      const index = this.findIndexInDB(this.db, item.id);
+      this.map.removeLayer(this.db[index].marker);
+      this.db.splice(index, 1);
+    }
 
-  findIndexInDB(db: Point[], id: number) {
-    for (let i = 0; i < db.length; i += 1) {
-      if (db[i].id === id) {
-        return i;
+    findIndexInDB(db: Point[], id: number) {
+      for (let i = 0; i < db.length; i += 1) {
+        if (db[i].id === id) {
+          return i;
+        }
       }
     }
   }
-}
