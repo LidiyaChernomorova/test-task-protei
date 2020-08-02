@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ServiceService } from '../../services/service.service';
 
-import {Point} from '../../interfaces/point.model';
+import { Point } from '../../interfaces/point.model';
 @Component({
   selector: 'app-main',
   templateUrl: './main.component.html',
@@ -10,19 +10,22 @@ import {Point} from '../../interfaces/point.model';
 export class MainComponent implements OnInit {
   public db: Point[];
   public selectedItemId: number;
+  public idGenerator: number;
   constructor(private serviceService: ServiceService) {
     this.db = this.serviceService.db;
   }
 
   ngOnInit(): void {
+    this.idGenerator = 3;
   }
 
-  addElem() {
+  addElem(LatLng) {
+    const id = this.idGenerator++;
     const newPoint = {
-      name: 'nana1',
-      id: 2,
-      lat: 51.508,
-      lng: -0.11
+      name: 'nana' + id,
+      id,
+      lat: LatLng.lat,
+      lng: LatLng.lng
     };
     this.db.push(newPoint);
   }

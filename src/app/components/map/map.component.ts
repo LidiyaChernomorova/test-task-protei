@@ -54,19 +54,18 @@ export class MapComponent implements AfterViewInit, OnDestroy {
     this.deletedPoint.emit(item);
   }
 
-  addOnMap(item: Point) {
-    this.addPoint.emit(item);
-  }
+  // addOnMap() {
+  //   this.addPoint.emit('?');
+  // }
 
   protected initMapHandlers(): void {
     this.map.on('click', this.onClickHandler);
   }
 
   protected onMapClick(evt: any): void {
-    console.log(evt.originalEvent.target);
-    const target: any = evt.originalEvent.target;
+    const node: any = evt.originalEvent.target;
     console.log('Map click on: ', evt.originalEvent.target.title);
-
+    this.addPoint.emit(evt.latlng);
     // this.markerService.getValue().subscribe((value) => {
     // });
 
