@@ -53,20 +53,23 @@ export class MainComponent implements OnInit {
       const index = this.findIndexInDB(this.db, this.selectedId);
       this.selectElem(this.db[index]);
     } else {
-      const lat = evt.latlng.lat;
-      const lng = evt.latlng.lng;
-      const id = this.idGenerator++;
-      const name = 'nana' + id;
-
-      const newMarker = new L.marker([lat, lng], { icon: this.icon, title: name })
-        .addTo(this.map)
-        .on('mouseup', e => { this.map.setView(e.target.getLatLng()); this.selectedId = id });
-
-      this.map.addLayer(newMarker);
-
-      const newPoint: Point = { name, id, lat, lng, marker: newMarker };
-      this.db.push(newPoint);
+      this.createPoint(evt);
     }
+  }
+
+  createPoint(evt) {
+    const lat = evt.latlng.lat;
+    const lng = evt.latlng.lng;
+    const id = this.idGenerator++;
+    const name = 'nana' + id;
+
+    const newMarker = new L.marker([lat, lng], { icon: this.icon, title: name })
+      .addTo(this.map)
+      .on('mouseup', e => { this.map.setView(e.target.getLatLng()); this.selectedId = id });
+    this.map.addLayer(newMarker);
+
+    const newPoint: Point = { name, id, lat, lng, marker: newMarker };
+    this.db.push(newPoint);
   }
 
   selectElem(item: Point) {
