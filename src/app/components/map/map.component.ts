@@ -1,8 +1,8 @@
 import { Component, Input, Output, EventEmitter, AfterViewInit, OnDestroy } from '@angular/core';
-import * as L from 'leaflet';
+import { MapCreatorService } from '../../services/map-creator.service';
 
 import { Click } from '../../interfaces/click.model';
-import {Point} from '../../interfaces/point.model';
+import { Point } from '../../interfaces/point.model';
 @Component({
   selector: 'app-map',
   templateUrl: './map.component.html',
@@ -19,32 +19,19 @@ export class MapComponent implements AfterViewInit, OnDestroy {
   protected onClickHandler: Click;
   private map: any;
 
-  constructor() {
-    this.onClickHandler = (evt) => this.onMapClick(evt);
+  constructor(private mapCreatorService: MapCreatorService) {
+    this.onClickHandler = (evt) => this.addOnMap(evt);
+    this.map = mapCreatorService.map;
   }
 
   public ngAfterViewInit(): void {
-    this.initMap();
+    this.map = this.mapCreatorService.initMap();
     this.initMapHandlers();
   }
 
   public ngOnDestroy(): void {
     this.map.off('click', this.onClickHandler);
   }
-
-  private initMap(): void {
-    this.map = L.map('map', {
-      center: [39.8282, -98.5795],
-      zoom: 3
-    });
-    const tiles = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      maxZoom: 19,
-      attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-    });
-
-    tiles.addTo(this.map);
-  }
-
 
   selectOnMap(item: Point) {
     this.selectedPoint.emit(item);
@@ -54,25 +41,14 @@ export class MapComponent implements AfterViewInit, OnDestroy {
     this.deletedPoint.emit(item);
   }
 
-  // addOnMap() {
-  //   this.addPoint.emit('?');
-  // }
+    addOnMap(evt: any): void {
+      const node: any = evt.originalEvent.target;
+      console.log('Map click on: ', evt.originalEvent.target.title);
+      this.addPoint.emit(evt.latlng);
+    }
 
-  protected initMapHandlers(): void {
+  initMapHandlers(): void {
     this.map.on('click', this.onClickHandler);
   }
 
-  protected onMapClick(evt: any): void {
-    const node: any = evt.originalEvent.target;
-    console.log('Map click on: ', evt.originalEvent.target.title);
-    this.addPoint.emit(evt.latlng);
-    // this.markerService.getValue().subscribe((value) => {
-    // });
-
-    // if (target.className === 'leaflet-marker-icon leaflet-zoom-animated leaflet-interactive') {
-    //   this.markerService.setValue(evt.originalEvent.target.title, target);
-    // } else {
-    //   this.markerService.makeMarkers(this.map, evt.latlng);
-    // }
-  }
 }
