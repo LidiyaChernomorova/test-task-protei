@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, HostListener, } from '@angular/core';
 import { ServiceService } from '../../services/service.service';
 import { MapIconOptions } from '../../icon';
 import * as L from 'leaflet';
@@ -17,7 +17,9 @@ export class MainComponent implements OnInit {
   public selectedItemId: number;
   public idGenerator: number;
   public icon: Icon;
-  public map;
+  public map: L.map;
+  private lastNode = {};
+
 
   constructor(private serviceService: ServiceService, private mapCreatorService: MapCreatorService) {
     this.db = this.serviceService.db;
@@ -30,13 +32,22 @@ export class MainComponent implements OnInit {
       shadowAnchor: MapIconOptions.shadowAnchor,
     });
   }
+  @HostListener('window:mousedown', ['$event']) click(event) {
+    const node = event.target;
+    if (this.lastNode.className === 'leaflet-marker-icon leaflet-zoom-animated leaflet-interactive') {
+      this.lastNode.src = '../../../assets/maps/marker-icon.png';
+    }
+    this.lastNode = node;
+  }
 
   ngOnInit(): void {
     this.idGenerator = 3;
     this.map = this.mapCreatorService.initMap();
   }
 
-  addElem(LatLng) {
+  addElem(evt) {
+    const node: any = evt.originalEvent.target;
+    const LatLng = evt.latlng;
     const id = this.idGenerator++;
     const newPoint = {
       name: 'nana' + id,
@@ -45,8 +56,11 @@ export class MainComponent implements OnInit {
       lng: LatLng.lng
     };
     this.db.push(newPoint);
-
-    makeMarker(this.map, this.icon, newPoint)
+    if (node.className === 'leaflet-marker-icon leaflet-zoom-animated leaflet-interactive') {
+      node.src = '../../../assets/maps/marker-icon-selected.png';
+    } else {
+      this.makeMarker(this.map, this.icon, newPoint);
+    }
   }
 
   selectElem(item: Point) {

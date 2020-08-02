@@ -2,6 +2,7 @@ import { Component, Input, Output, EventEmitter, AfterViewInit, OnDestroy } from
 
 import { Click } from '../../interfaces/click.model';
 import { Point } from '../../interfaces/point.model';
+import * as L from 'leaflet';
 @Component({
   selector: 'app-map',
   templateUrl: './map.component.html',
@@ -10,7 +11,7 @@ import { Point } from '../../interfaces/point.model';
 export class MapComponent implements AfterViewInit, OnDestroy {
 
   @Input() db: Point[];
-  @Input() map;
+  @Input() map: L.map;
   @Input() selectedItemId: number;
   @Output() selectedPoint = new EventEmitter<Point>();
   @Output() deletedPoint = new EventEmitter<Point>();
@@ -24,8 +25,7 @@ export class MapComponent implements AfterViewInit, OnDestroy {
   }
 
   public ngAfterViewInit(): void {
-
-     this.initMapHandlers();
+    this.initMapHandlers();
   }
 
   public ngOnDestroy(): void {
@@ -40,11 +40,9 @@ export class MapComponent implements AfterViewInit, OnDestroy {
     this.deletedPoint.emit(item);
   }
 
-    addOnMap(evt: any): void {
-      const node: any = evt.originalEvent.target;
-      console.log('Map click on: ', evt.originalEvent.target.title);
-      this.addPoint.emit(evt.latlng);
-    }
+  addOnMap(evt: any): void {
+    this.addPoint.emit(evt);
+  }
 
   initMapHandlers(): void {
     this.map.on('click', this.onClickHandler);
