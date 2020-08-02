@@ -76,18 +76,18 @@ export class MainComponent implements OnInit {
   }
 
   deleteElem(item: Point) {
-    function findWithAttr(array: Point[], attr: string, value: number) {
-      for (let i = 0; i < array.length; i += 1) {
-        if (array[i][attr] === value) {
-          return i;
-        }
-      }
-      return -1;
-    }
-    const index = findWithAttr(this.db, 'id', item.id);
+
+    const index = this.findIndexInDB(this.db, item.id);
 
     this.map.removeLayer(this.db[index].marker);
     this.db.splice(index, 1);
   }
 
+  findIndexInDB(db: Point[], id: number) {
+    for (let i = 0; i < db.length; i += 1) {
+      if (db[i].id === id) {
+        return i;
+      }
+    }
+  }
 }
