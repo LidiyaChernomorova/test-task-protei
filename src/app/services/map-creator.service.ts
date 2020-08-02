@@ -24,4 +24,8 @@ export class MapCreatorService {
     tiles.addTo(this.map);
     return this.map;
   }
+
+  takeMap() {
+    console.log(this.map)
+  }
 }

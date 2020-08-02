@@ -1,5 +1,4 @@
 import { Component, Input, Output, EventEmitter, AfterViewInit, OnDestroy } from '@angular/core';
-import { MapCreatorService } from '../../services/map-creator.service';
 
 import { Click } from '../../interfaces/click.model';
 import { Point } from '../../interfaces/point.model';
@@ -11,22 +10,22 @@ import { Point } from '../../interfaces/point.model';
 export class MapComponent implements AfterViewInit, OnDestroy {
 
   @Input() db: Point[];
+  @Input() map;
   @Input() selectedItemId: number;
   @Output() selectedPoint = new EventEmitter<Point>();
   @Output() deletedPoint = new EventEmitter<Point>();
   @Output() addPoint = new EventEmitter<Point>();
 
   protected onClickHandler: Click;
-  private map: any;
 
-  constructor(private mapCreatorService: MapCreatorService) {
+
+  constructor() {
     this.onClickHandler = (evt) => this.addOnMap(evt);
-    this.map = mapCreatorService.map;
   }
 
   public ngAfterViewInit(): void {
-    this.map = this.mapCreatorService.initMap();
-    this.initMapHandlers();
+
+     this.initMapHandlers();
   }
 
   public ngOnDestroy(): void {
