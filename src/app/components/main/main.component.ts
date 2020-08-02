@@ -19,6 +19,7 @@ export class MainComponent implements OnInit {
   public icon: Icon;
   public map: L.map;
   private lastNode = {};
+  private markerDB = [];
 
 
   constructor(private serviceService: ServiceService, private mapCreatorService: MapCreatorService) {
@@ -45,21 +46,31 @@ export class MainComponent implements OnInit {
     this.map = this.mapCreatorService.initMap();
   }
 
-  addElem(evt) {
+  addPoint(evt) {
     const node: any = evt.originalEvent.target;
-    const LatLng = evt.latlng;
-    const id = this.idGenerator++;
-    const newPoint = {
-      name: 'nana' + id,
-      id,
-      lat: LatLng.lat,
-      lng: LatLng.lng
-    };
-    this.db.push(newPoint);
+    console.log(node)
+    console.log(evt.originalEvent.toElement.title)
     if (node.className === 'leaflet-marker-icon leaflet-zoom-animated leaflet-interactive') {
       node.src = '../../../assets/maps/marker-icon-selected.png';
+      //find point by id
+      const index = 0;
+      const point = this.db[index];
+      console.log(point)
+      this.selectElem(this.db[index])
     } else {
-      this.makeMarker(this.map, this.icon, newPoint);
+      const lat = evt.latlng.lat;
+      const lng = evt.latlng.lng;
+      const id = this.idGenerator++;
+      const name = 'nana' + id;
+
+      const newMarker = new L.marker([lat, lng], { icon: this.icon, title: name })
+        .addTo(this.map)
+        .on('mouseup', e => this.map.setView(e.target.getLatLng()));
+
+      this.map.addLayer(newMarker);
+
+      const newPoint: Point = { name, id, lat, lng, marker: newMarker };
+      this.db.push(newPoint);
     }
   }
 
@@ -80,13 +91,4 @@ export class MainComponent implements OnInit {
     this.db.splice(index, 1);
   }
 
-  makeMarker(map: L.map, icon, point) {
-    L.marker([point.lat, point.lng], { icon, title: point.name })
-      .addTo(map)
-      .on('mouseup', centerView);
-
-    function centerView(e: any) {
-      map.setView(e.target.getLatLng());
-    }
-  }
 }
