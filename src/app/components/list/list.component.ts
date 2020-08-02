@@ -8,7 +8,7 @@ import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 export class ListComponent implements OnInit {
 
   @Input() db;
-  @Input() selectedItemName;
+  @Input() selectedItemId;
   @Output() selectedItem = new EventEmitter<string>();
   @Output() deletedItem = new EventEmitter<string>();
 

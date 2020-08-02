@@ -8,7 +8,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 export class MapComponent implements OnInit {
 
   @Input() db;
-  @Input() selectedItemName;
+  @Input() selectedItemId;
   @Output() selectedPoint = new EventEmitter<string>();
   @Output() deletedPoint = new EventEmitter<string>();
 

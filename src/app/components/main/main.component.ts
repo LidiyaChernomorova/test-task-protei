@@ -8,7 +8,7 @@ import { ServiceService } from '../../services/service.service';
 })
 export class MainComponent implements OnInit {
   public db;
-  public selectedItemName;
+  public selectedItemId;
   constructor(private serviceService: ServiceService) {
     this.db = serviceService.db;
   }
@@ -17,11 +17,16 @@ export class MainComponent implements OnInit {
   }
 
   addPoint() {
-    this.serviceService.db.push({ name: 'lol' })
+    this.serviceService.db.push({
+      "name": "nana1",
+      "id": 2,
+      "lat": 51.508,
+      "lng": -0.11
+    })
   }
 
   selectElem(item) {
-    this.selectedItemName = item.name;
+    this.selectedItemId = item.id;
   }
 
   deleteElem(item) {

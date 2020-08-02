@@ -2,10 +2,10 @@
 <div
   *ngFor="let item of db"
   (click)="selectOnMap(item)"
-  [ngClass]="{ nameSected: item.name == selectedItemName }"
+  [ngClass]="{ nameSected: item.id == selectedItemId }"
 >
   {{ item.name }}
-  <button *ngIf="item.name == selectedItemName" (click)="deleteOnMap(item)">
+  <button *ngIf="item.name == selectedItemId" (click)="deleteOnMap(item)">
     delele
   </button>
 </div>
