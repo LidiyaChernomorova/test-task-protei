@@ -15,7 +15,7 @@ export class MapComponent implements AfterViewInit, OnDestroy {
   @Input() selectedItemId: number;
   @Output() selectedPoint = new EventEmitter<Point>();
   @Output() deletedPoint = new EventEmitter<Point>();
-  @Output() addPoint = new EventEmitter<Point>();
+  @Output() clickOnMap = new EventEmitter<Point>();
 
   protected onClickHandler: Click;
 
@@ -41,7 +41,7 @@ export class MapComponent implements AfterViewInit, OnDestroy {
   }
 
   addOnMap(evt: any): void {
-    this.addPoint.emit(evt);
+    this.clickOnMap.emit(evt);
   }
 
   initMapHandlers(): void {

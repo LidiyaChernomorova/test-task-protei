@@ -46,7 +46,7 @@ export class MainComponent implements OnInit {
     this.map = this.mapCreatorService.initMap();
   }
 
-  addPoint(evt) {
+  clickOnMap(evt) {
     const node: any = evt.originalEvent.target;
     if (node.className === 'leaflet-marker-icon leaflet-zoom-animated leaflet-interactive') {
       node.src = '../../../assets/maps/marker-icon-selected.png';
@@ -74,9 +74,7 @@ export class MainComponent implements OnInit {
   }
 
   deleteElem(item: Point) {
-
     const index = this.findIndexInDB(this.db, item.id);
-
     this.map.removeLayer(this.db[index].marker);
     this.db.splice(index, 1);
   }
