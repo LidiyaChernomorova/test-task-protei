@@ -1,5 +1,7 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 
+import {Point} from '../../interfaces/point.model';
+
 @Component({
   selector: 'app-list',
   templateUrl: './list.component.html',
@@ -7,21 +9,21 @@ import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 })
 export class ListComponent implements OnInit {
 
-  @Input() db;
-  @Input() selectedItemId;
-  @Output() selectedItem = new EventEmitter<string>();
-  @Output() deletedItem = new EventEmitter<string>();
+  @Input() db: Point[];
+  @Input() selectedItemId: number;
+  @Output() selectedItem = new EventEmitter<Point>();
+  @Output() deletedItem = new EventEmitter<Point>();
 
   constructor() { }
 
   ngOnInit(): void {
   }
 
-  selectOnList(item) {
+  selectOnList(item: Point) {
     this.selectedItem.emit(item);
   }
 
-  deleteOnList(item) {
+  deleteOnList(item: Point) {
     this.deletedItem.emit(item);
   }
 }
