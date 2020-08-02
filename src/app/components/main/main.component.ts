@@ -17,13 +17,14 @@ export class MainComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  addPoint() {
-    this.db.push({
-      "name": "nana1",
-      "id": 2,
-      "lat": 51.508,
-      "lng": -0.11
-    })
+  addElem() {
+    const newPoint = {
+      name: 'nana1',
+      id: 2,
+      lat: 51.508,
+      lng: -0.11
+    };
+    this.db.push(newPoint);
   }
 
   selectElem(item: Point) {

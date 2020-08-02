@@ -1,7 +1,7 @@
 import { Component, Input, Output, EventEmitter, AfterViewInit, OnDestroy } from '@angular/core';
 import * as L from 'leaflet';
-import { Click } from '../../interfaces/click.model';
 
+import { Click } from '../../interfaces/click.model';
 import {Point} from '../../interfaces/point.model';
 @Component({
   selector: 'app-map',
@@ -14,12 +14,13 @@ export class MapComponent implements AfterViewInit, OnDestroy {
   @Input() selectedItemId: number;
   @Output() selectedPoint = new EventEmitter<Point>();
   @Output() deletedPoint = new EventEmitter<Point>();
+  @Output() addPoint = new EventEmitter<Point>();
 
   protected onClickHandler: Click;
   private map: any;
 
   constructor() {
-    this.onClickHandler = (evt: any) => this.onMapClick(evt);
+    this.onClickHandler = (evt) => this.onMapClick(evt);
   }
 
   public ngAfterViewInit(): void {
@@ -51,6 +52,10 @@ export class MapComponent implements AfterViewInit, OnDestroy {
 
   deleteOnMap(item: Point) {
     this.deletedPoint.emit(item);
+  }
+
+  addOnMap(item: Point) {
+    this.addPoint.emit(item);
   }
 
   protected initMapHandlers(): void {

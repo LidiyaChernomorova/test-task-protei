@@ -13,6 +13,7 @@ export class ListComponent implements OnInit {
   @Input() selectedItemId: number;
   @Output() selectedItem = new EventEmitter<Point>();
   @Output() deletedItem = new EventEmitter<Point>();
+  @Output() addItem = new EventEmitter<Point>();
 
   constructor() { }
 
@@ -25,5 +26,9 @@ export class ListComponent implements OnInit {
 
   deleteOnList(item: Point) {
     this.deletedItem.emit(item);
+  }
+
+  addOnList(item: Point) {
+    this.addItem.emit(item);
   }
 }
