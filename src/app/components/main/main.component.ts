@@ -19,7 +19,6 @@ export class MainComponent implements OnInit {
   public icon: Icon;
   public map: L.map;
   private lastNode = {};
-  private markerDB = [];
 
 
   constructor(private serviceService: ServiceService, private mapCreatorService: MapCreatorService) {
@@ -48,8 +47,6 @@ export class MainComponent implements OnInit {
 
   addPoint(evt) {
     const node: any = evt.originalEvent.target;
-    console.log(node)
-    console.log(evt.originalEvent.toElement.title)
     if (node.className === 'leaflet-marker-icon leaflet-zoom-animated leaflet-interactive') {
       node.src = '../../../assets/maps/marker-icon-selected.png';
       //find point by id
@@ -88,6 +85,8 @@ export class MainComponent implements OnInit {
       return -1;
     }
     const index = findWithAttr(this.db, 'id', item.id);
+
+    this.map.removeLayer(this.db[index].marker);
     this.db.splice(index, 1);
   }
 
