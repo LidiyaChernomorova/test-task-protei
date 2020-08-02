@@ -44,10 +44,8 @@ export class MainComponent implements OnInit {
   ngOnInit(): void {
     this.idGenerator = 3;
     this.map = this.mapCreatorService.initMap();
-    this.db.forEach((item, index) =>
-      this.createPoint(item, true, index)
-    )
-
+    this.db.forEach((item: Point, index: number) =>
+      this.createPoint(item, true, index))
   }
 
   clickOnMap(evt) {
@@ -66,7 +64,7 @@ export class MainComponent implements OnInit {
     }
   }
 
-  createPoint(item, onInitStage, index) {
+  createPoint(item: Point, onInitStage: boolean, index: number) {
     const newMarker = new L.marker([item.lat, item.lng], { icon: this.icon, title: name })
       .addTo(this.map)
       .on('mouseup', e => { this.map.setView(e.target.getLatLng()); this.selectedId = item.id; });
@@ -79,21 +77,21 @@ export class MainComponent implements OnInit {
     }
   }
 
-    selectElem(item: Point) {
-      this.selectedItemId = item.id;
-    }
+  selectElem(item: Point) {
+    this.selectedItemId = item.id;
+  }
 
-    deleteElem(item: Point) {
-      const index = this.findIndexInDB(this.db, item.id);
-      this.map.removeLayer(this.db[index].marker);
-      this.db.splice(index, 1);
-    }
+  deleteElem(item: Point) {
+    const index = this.findIndexInDB(this.db, item.id);
+    this.map.removeLayer(this.db[index].marker);
+    this.db.splice(index, 1);
+  }
 
-    findIndexInDB(db: Point[], id: number) {
-      for (let i = 0; i < db.length; i += 1) {
-        if (db[i].id === id) {
-          return i;
-        }
+  findIndexInDB(db: Point[], id: number) {
+    for (let i = 0; i < db.length; i += 1) {
+      if (db[i].id === id) {
+        return i;
       }
     }
   }
+}
