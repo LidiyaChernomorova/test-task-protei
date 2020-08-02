@@ -19,6 +19,7 @@ export class MainComponent implements OnInit {
   public icon: Icon;
   public map: L.map;
   private lastNode = {};
+  private selectedId: number;
 
 
   constructor(private serviceService: ServiceService, private mapCreatorService: MapCreatorService) {
@@ -49,11 +50,8 @@ export class MainComponent implements OnInit {
     const node: any = evt.originalEvent.target;
     if (node.className === 'leaflet-marker-icon leaflet-zoom-animated leaflet-interactive') {
       node.src = '../../../assets/maps/marker-icon-selected.png';
-      //find point by id
-      const index = 0;
-      const point = this.db[index];
-      console.log(point)
-      this.selectElem(this.db[index])
+      const index = this.findIndexInDB(this.db, this.selectedId);
+      this.selectElem(this.db[index]);
     } else {
       const lat = evt.latlng.lat;
       const lng = evt.latlng.lng;
@@ -62,7 +60,7 @@ export class MainComponent implements OnInit {
 
       const newMarker = new L.marker([lat, lng], { icon: this.icon, title: name })
         .addTo(this.map)
-        .on('mouseup', e => this.map.setView(e.target.getLatLng()));
+        .on('mouseup', e => { this.map.setView(e.target.getLatLng()); this.selectedId = id });
 
       this.map.addLayer(newMarker);
 
