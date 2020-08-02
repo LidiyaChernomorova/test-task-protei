@@ -1,9 +1,8 @@
 import { Component, OnInit, HostListener, } from '@angular/core';
-import { ServiceService } from '../../services/service.service';
 import { MapIconOptions } from '../../icon';
 import * as L from 'leaflet';
 import { MapCreatorService } from '../../services/map-creator.service';
-
+import data from '../../initialPoints.json';
 
 import { Point } from '../../interfaces/point.model';
 import { Icon } from '../../interfaces/icon.model';
@@ -22,8 +21,8 @@ export class MainComponent implements OnInit {
   private selectedId: number;
 
 
-  constructor(private serviceService: ServiceService, private mapCreatorService: MapCreatorService) {
-    this.db = this.serviceService.db;
+  constructor(private mapCreatorService: MapCreatorService) {
+    this.db = data.db;
     this.icon = L.icon({
       iconAnchor: MapIconOptions.iconAnchor,
       iconSize: MapIconOptions.iconSize,
