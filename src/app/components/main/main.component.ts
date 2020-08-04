@@ -86,6 +86,7 @@ export class MainComponent implements OnInit {
     const index = this.findIndexInDB(this.db, item.id);
     this.map.removeLayer(this.db[index].marker);
     this.db.splice(index, 1);
+    this.lastSelectedMarker = {};
   }
 
   findIndexInDB(db: Point[], id: number) {
