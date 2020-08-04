@@ -1,9 +1,13 @@
+<div  class="filter-container">
+  <input (keyup)="filterItems($event)" />
+</div>
 <app-list
   [db]="db"
   (selectedItem)="selectElem($event)"
   (deletedItem)="deleteElem($event)"
   [selectedItemId]="selectedItemId"
   class="list-container"
+  [filterValues]="filterValues"
 ></app-list>
 <app-map
   [db]="db"

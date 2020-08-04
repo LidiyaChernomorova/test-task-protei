@@ -19,6 +19,7 @@ export class MainComponent implements OnInit {
   public map: L.map;
   private lastSelectedMarker = {};
   private selectedId: number;
+  private filterValues = '';
 
 
   constructor(private mapCreatorService: MapCreatorService) {
@@ -44,8 +45,12 @@ export class MainComponent implements OnInit {
   ngOnInit(): void {
     this.idGenerator = 3;
     this.map = this.mapCreatorService.initMap();
+    this.initPoints();
+  }
+
+  initPoints() {
     this.db.forEach((item: Point, index: number) =>
-      this.createPoint(item, true, index))
+      this.createPoint(item, true, index));
   }
 
   clickOnMap(evt) {
@@ -95,5 +100,15 @@ export class MainComponent implements OnInit {
         return i;
       }
     }
+  }
+
+  filterItems(event: any) {
+    this.filterValues = event.target.value;
+    this.db.forEach((item: Point) => {
+      this.map.removeLayer(item.marker);
+      if (item.name.match(this.filterValues)) {
+        this.map.addLayer(item.marker);
+      }
+    })
   }
 }
