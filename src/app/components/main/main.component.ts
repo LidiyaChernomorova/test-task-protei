@@ -17,7 +17,7 @@ export class MainComponent implements OnInit {
   public idGenerator: number;
   public icon: Icon;
   public map: L.map;
-  private lastNode = {};
+  private lastSelectedMarker = {};
   private selectedId: number;
 
 
@@ -33,11 +33,12 @@ export class MainComponent implements OnInit {
     });
   }
   @HostListener('window:mousedown', ['$event']) click(event) {
-    const node = event.target;
-    if (this.lastNode.className === 'leaflet-marker-icon leaflet-zoom-animated leaflet-interactive') {
-      this.lastNode.src = '../../../assets/maps/marker-icon.png';
+    if (this.lastSelectedMarker.marker) {
+      this.lastSelectedMarker.marker._icon.src = '../../../assets/maps/marker-icon.png';
+      if (event.srcElement.nodeName !== 'BUTTON') {
+        this.selectedItemId = -1;
+      }
     }
-    this.lastNode = node;
   }
 
   ngOnInit(): void {
@@ -50,7 +51,6 @@ export class MainComponent implements OnInit {
   clickOnMap(evt) {
     const node: any = evt.originalEvent.target;
     if (node.className === 'leaflet-marker-icon leaflet-zoom-animated leaflet-interactive') {
-      node.src = '../../../assets/maps/marker-icon-selected.png';
       const index = this.findIndexInDB(this.db, this.selectedId);
       this.selectElem(this.db[index]);
     } else {
@@ -77,7 +77,9 @@ export class MainComponent implements OnInit {
   }
 
   selectElem(item: Point) {
+    item.marker._icon.src = '../../../assets/maps/marker-icon-selected.png';
     this.selectedItemId = item.id;
+    this.lastSelectedMarker = item;
   }
 
   deleteElem(item: Point) {
