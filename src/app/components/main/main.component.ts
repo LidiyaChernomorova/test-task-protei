@@ -52,14 +52,15 @@ export class MainComponent implements OnInit {
       this.createPoint(item, true, index));
   }
 
-  clickOnMap(evt) {
-    const node: any = evt.originalEvent.target;
+  clickOnMap(event) {
+    const node: any = event.originalEvent.target;
     if (node.className === 'leaflet-marker-icon leaflet-zoom-animated leaflet-interactive') {
       const index = this.findIndexInDB(this.db, this.selectedId);
-      this.selectElem(this.db[index]);
+      this.selectElem(this.db[index], event);
+      console.log(event)
     } else {
-      const lat = evt.latlng.lat;
-      const lng = evt.latlng.lng;
+      const lat = event.latlng.lat;
+      const lng = event.latlng.lng;
       const id = this.idGenerator++;
       const name = 'nana' + id;
       const newPoint: Point = { name, id, lat, lng, marker: null, isFiltered: true };
@@ -84,6 +85,7 @@ export class MainComponent implements OnInit {
     item.marker._icon.src = '../../../assets/maps/marker-icon-selected.png';
     this.selectedItemId = item.id;
     this.lastSelectedMarker = item;
+    this.map.setView(item.marker.getLatLng());
   }
 
   deleteElem(item: Point) {
