@@ -4,19 +4,25 @@
       "name": "nana0",
       "id": 0,
       "lat": 42.659829,
-      "lng": -73.781339
+      "lng": -73.781339,
+      "marker": null,
+      "isFiltered": true
     },
     {
       "name": "nana1",
       "id": 1,
       "lat": 51.508,
-      "lng": -0.11
+      "lng": -0.11,
+      "marker": null,
+      "isFiltered": true
     },
     {
       "name": "nana2",
       "id": 2,
       "lat": 0.659829,
-      "lng": -73.781339
+      "lng": -73.781339,
+      "marker": null,
+      "isFiltered": true
     }
   ]
 }

@@ -12,7 +12,7 @@ export class ListComponent implements OnInit {
   @Input() db: Point[];
   @Input() selectedItemId: number;
   @Input() filterValues: string;
-  @Input() filterMode: boolean;
+  @Input() isFiltered: boolean;
   @Output() selectedItem = new EventEmitter<Point>();
   @Output() deletedItem = new EventEmitter<Point>();
 

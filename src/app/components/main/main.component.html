@@ -4,17 +4,14 @@
   (deletedItem)="deleteElem($event)"
   [selectedItemId]="selectedItemId"
   [filterValues]="filterValues"
-  [filterMode]="filterMode"
+  [isFiltered]="isFiltered"
   class="list-container"
 ></app-list>
 <div class="filter-container">
   <h1>Filter points:</h1>
-  <input
-    (keyup)="filterItems($event)"
-    (focusout)="filterModeChange(true)"
-    (focus)="filterModeChange(false)"
-    placeholder="start typing"
-  />
+  <input [(ngModel)]="filterValue" placeholder="start typing" />
+  <button (click)="filter()">search</button>
+  <button (click)="resetFilter()">reset</button>
 </div>
 <app-map
   [db]="db"

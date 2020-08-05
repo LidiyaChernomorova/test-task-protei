@@ -19,8 +19,7 @@ export class MainComponent implements OnInit {
   public map: L.map;
   private lastSelectedMarker = {};
   private selectedId: number;
-  private filterValues = '';
-  private filterMode = true;
+  public filterValue: string;
 
   constructor(private mapCreatorService: MapCreatorService) {
     this.db = data.db;
@@ -63,7 +62,7 @@ export class MainComponent implements OnInit {
       const lng = evt.latlng.lng;
       const id = this.idGenerator++;
       const name = 'nana' + id;
-      const newPoint: Point = { name, id, lat, lng, marker: null };
+      const newPoint: Point = { name, id, lat, lng, marker: null, isFiltered: true };
       this.createPoint(newPoint, false, null);
     }
   }
@@ -102,17 +101,23 @@ export class MainComponent implements OnInit {
     }
   }
 
-  filterItems(event: any) {
-    this.filterValues = event.target.value;
+  filter() {
     this.db.forEach((item: Point) => {
       this.map.removeLayer(item.marker);
-      if (item.name.match(this.filterValues)) {
+      if (item.name.match(this.filterValue)) {
         this.map.addLayer(item.marker);
+        item.isFiltered = true;
+      } else {
+        item.isFiltered = false;
       }
-    })
+    });
   }
 
-  filterModeChange(value) {
-    this.filterMode = value;
+  resetFilter() {
+    this.db.forEach((item: Point, index: number) => {
+      this.map.removeLayer(this.db[index].marker);
+      item.isFiltered = true;
+    });
+    this.initPoints();
   }
 }

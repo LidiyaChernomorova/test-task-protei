@@ -4,4 +4,5 @@ export interface Point {
     lat: number;
     lng: number;
     marker: any;
+    isFiltered: boolean;
 }
