@@ -1,5 +1,9 @@
-<div  class="filter-container">
-  <input (keyup)="filterItems($event)" />
+<div class="filter-container">
+  <input
+    (keyup)="filterItems($event)"
+    (focusout)="filterModeChange(true)"
+    (focus)="filterModeChange(false)"
+  />
 </div>
 <app-list
   [db]="db"
@@ -8,6 +12,7 @@
   [selectedItemId]="selectedItemId"
   class="list-container"
   [filterValues]="filterValues"
+  [filterMode]="filterMode"
 ></app-list>
 <app-map
   [db]="db"

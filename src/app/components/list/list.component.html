@@ -4,8 +4,7 @@
   (click)="selectOnList(item)"
   [ngClass]="{ nameSected: item.id == selectedItemId }"
 >
-
-  <div *ngIf="filterValues == item.name">
+  <div *ngIf="filterValues == item.name || filterMode">
     {{ item.name }}
     <button (click)="deleteOnList(item)" *ngIf="item.id == selectedItemId">
       delele

@@ -20,7 +20,7 @@ export class MainComponent implements OnInit {
   private lastSelectedMarker = {};
   private selectedId: number;
   private filterValues = '';
-
+  private filterMode = true;
 
   constructor(private mapCreatorService: MapCreatorService) {
     this.db = data.db;
@@ -110,5 +110,9 @@ export class MainComponent implements OnInit {
         this.map.addLayer(item.marker);
       }
     })
+  }
+
+  filterModeChange(value) {
+    this.filterMode = value;
   }
 }
