@@ -1,16 +1,3 @@
-<p>map works!</p>
-<div>
-  <div
-    *ngFor="let item of db"
-    (click)="selectOnMap(item)"
-    [ngClass]="{ nameSected: item.id == selectedItemId }"
-  >
-    {{ item.name }}
-    <button *ngIf="item.id == selectedItemId" (click)="deleteOnMap(item)">
-      delele
-    </button>
-  </div>
-</div>
 <div class="map-container">
   <div class="map-frame">
     <div id="map"></div>

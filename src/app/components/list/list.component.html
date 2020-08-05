@@ -1,13 +1,15 @@
-<p>list works!</p>
+<h1>List of points:</h1>
 <div
   *ngFor="let item of db"
   (click)="selectOnList(item)"
   [ngClass]="{ nameSected: item.id == selectedItemId }"
 >
-  <div *ngIf="filterValues == item.name || filterMode">
-    {{ item.name }}
-    <button (click)="deleteOnList(item)" *ngIf="item.id == selectedItemId">
-      delele
-    </button>
-  </div>
+  <ul>
+    <li *ngIf="filterValues == item.name || filterMode">
+      {{ item.name }}
+      <button (click)="deleteOnList(item)" *ngIf="item.id == selectedItemId">
+        delele
+      </button>
+    </li>
+  </ul>
 </div>

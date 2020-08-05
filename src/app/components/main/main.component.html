@@ -1,19 +1,21 @@
-<div class="filter-container">
-  <input
-    (keyup)="filterItems($event)"
-    (focusout)="filterModeChange(true)"
-    (focus)="filterModeChange(false)"
-  />
-</div>
 <app-list
   [db]="db"
   (selectedItem)="selectElem($event)"
   (deletedItem)="deleteElem($event)"
   [selectedItemId]="selectedItemId"
-  class="list-container"
   [filterValues]="filterValues"
   [filterMode]="filterMode"
+  class="list-container"
 ></app-list>
+<div class="filter-container">
+  <h1>Filter points:</h1>
+  <input
+    (keyup)="filterItems($event)"
+    (focusout)="filterModeChange(true)"
+    (focus)="filterModeChange(false)"
+    placeholder="start typing"
+  />
+</div>
 <app-map
   [db]="db"
   [map]="map"
