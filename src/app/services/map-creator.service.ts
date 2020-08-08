@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { ConsoleReporter } from 'jasmine';
 import * as L from 'leaflet';
 
 @Injectable({

@@ -17,7 +17,7 @@ export class MainComponent implements OnInit {
   public idGenerator: number;
   public icon: Icon;
   public map: L.map;
-  private lastSelectedMarker = {};
+  private lastSelectedMarker: any = {};
   private selectedId: number;
   public filterValue: string;
 
@@ -56,8 +56,7 @@ export class MainComponent implements OnInit {
     const node: any = event.originalEvent.target;
     if (node.className === 'leaflet-marker-icon leaflet-zoom-animated leaflet-interactive') {
       const index = this.findIndexInDB(this.db, this.selectedId);
-      this.selectElem(this.db[index], event);
-      console.log(event)
+      this.selectElem(this.db[index]);
     } else {
       const lat = event.latlng.lat;
       const lng = event.latlng.lng;
