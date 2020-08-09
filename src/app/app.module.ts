@@ -5,7 +5,7 @@ import { AppComponent } from './app.component';
 import { MainComponent } from './components/main/main.component';
 import { ListComponent } from './components/list/list.component';
 import { MapComponent } from './components/map/map.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -16,7 +16,8 @@ import { FormsModule } from '@angular/forms';
   ],
   imports: [
     BrowserModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

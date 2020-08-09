@@ -6,6 +6,8 @@ import data from '../../initialPoints.json';
 
 import { Point } from '../../interfaces/point.model';
 import { Icon } from '../../interfaces/icon.model';
+
+import { FormBuilder, FormGroup, Validators, AbstractControl, FormControl } from '@angular/forms';
 @Component({
   selector: 'app-main',
   templateUrl: './main.component.html',
@@ -19,9 +21,10 @@ export class MainComponent implements OnInit {
   public map: L.map;
   private lastSelectedMarker: any = {};
   private selectedId: number;
-  public filterValue: string;
+  private filterForm: FormGroup;
+  private filterPoint: AbstractControl;
 
-  constructor(private mapCreatorService: MapCreatorService) {
+  constructor(private mapCreatorService: MapCreatorService, formBuilder: FormBuilder) {
     this.db = data.db;
     this.icon = L.icon({
       iconAnchor: MapIconOptions.iconAnchor,
@@ -31,6 +34,12 @@ export class MainComponent implements OnInit {
       shadowSize: MapIconOptions.shadowSize,
       shadowAnchor: MapIconOptions.shadowAnchor,
     });
+    this.filterForm = formBuilder.group({
+      'filterPoint': ['', Validators.compose([
+        Validators.required, this.filterPointValidator])]
+    });
+
+    this.filterPoint = this.filterForm.controls['filterPoint'];
   }
   @HostListener('window:mousedown', ['$event']) click(event) {
     if (this.lastSelectedMarker.marker) {
@@ -61,7 +70,7 @@ export class MainComponent implements OnInit {
       const lat = event.latlng.lat;
       const lng = event.latlng.lng;
       const id = this.idGenerator++;
-      const name = 'nana' + id;
+      const name = 'name' + id;
       const newPoint: Point = { name, id, lat, lng, marker: null, isFiltered: true };
       this.createPoint(newPoint, false, null);
     }
@@ -102,10 +111,11 @@ export class MainComponent implements OnInit {
     }
   }
 
-  filter() {
+  filter(filterValue) {
+
     this.db.forEach((item: Point) => {
       this.map.removeLayer(item.marker);
-      if (item.name.match(this.filterValue)) {
+      if (item.name.match(filterValue.filterPoint)) {
         this.map.addLayer(item.marker);
         item.isFiltered = true;
       } else {
@@ -121,4 +131,20 @@ export class MainComponent implements OnInit {
     });
     this.initPoints();
   }
+
+  onSubmit(value: string): void {
+    console.log('you submitted value: ', value);
+  }
+
+  filterPointValidator(control: FormControl): { [s: string]: boolean } {
+    if (!control.value.match(/^name/)) {
+      return { invalidFilterPoint: true };
+    }
+  }
+
+
+
+
+
+
 }

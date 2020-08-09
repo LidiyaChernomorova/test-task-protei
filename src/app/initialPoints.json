@@ -1,7 +1,7 @@
 {
   "db": [
     {
-      "name": "nana0",
+      "name": "name0",
       "id": 0,
       "lat": 42.659829,
       "lng": -73.781339,
@@ -9,7 +9,7 @@
       "isFiltered": true
     },
     {
-      "name": "nana1",
+      "name": "name1",
       "id": 1,
       "lat": 51.508,
       "lng": -0.11,
@@ -17,7 +17,7 @@
       "isFiltered": true
     },
     {
-      "name": "nana2",
+      "name": "name2",
       "id": 2,
       "lat": 0.659829,
       "lng": -73.781339,
