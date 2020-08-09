@@ -6,11 +6,7 @@
   class="list-container"
 ></app-list>
 <div class="filter-container">
-  <form
-    [formGroup]="filterForm"
-    (ngSubmit)="filter(filterForm.value)"
-    [class.error]="!filterForm.valid && filterForm.touched"
-  >
+  <form [formGroup]="filterForm" (ngSubmit)="filter(filterForm.value)">
     <div [class.error]="!filterPoint.valid && filterPoint.touched">
       <label for="filterPointInput"><h1>Filter points</h1></label>
       <input
@@ -18,12 +14,14 @@
         placeholder="start typing"
         [formControl]="filterPoint"
       />
-      <div *ngIf="!filterPoint.valid">value is invalid</div>
-      <div *ngIf="filterPoint.hasError('required')">
-        value is required
-      </div>
-      <div *ngIf="filterPoint.hasError('invalidFilterPoint')">
-        value must begin with <b>'name'</b>
+      <div *ngIf="filterPoint.dirty">
+        <div *ngIf="!filterPoint.valid">value is invalid</div>
+        <div *ngIf="filterPoint.hasError('required')">
+          value is required
+        </div>
+        <div *ngIf="filterPoint.hasError('invalidFilterPoint')">
+          value must begin with <b>'name'</b>
+        </div>
       </div>
     </div>
     <button type="submit">filter points</button>

@@ -132,9 +132,6 @@ export class MainComponent implements OnInit {
     this.initPoints();
   }
 
-  onSubmit(value: string): void {
-    console.log('you submitted value: ', value);
-  }
 
   filterPointValidator(control: FormControl): { [s: string]: boolean } {
     if (!control.value.match(/^name/)) {
