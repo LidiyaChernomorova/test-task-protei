@@ -21,10 +21,9 @@ export class MainComponent implements OnInit {
   public map: L.map;
   private lastSelectedMarker: any = {};
   private selectedId: number;
-  private filterForm: FormGroup;
-  private filterPoint: AbstractControl;
 
-  constructor(private mapCreatorService: MapCreatorService, formBuilder: FormBuilder) {
+
+  constructor(private mapCreatorService: MapCreatorService) {
     this.db = data.db;
     this.icon = L.icon({
       iconAnchor: MapIconOptions.iconAnchor,
@@ -34,12 +33,7 @@ export class MainComponent implements OnInit {
       shadowSize: MapIconOptions.shadowSize,
       shadowAnchor: MapIconOptions.shadowAnchor,
     });
-    this.filterForm = formBuilder.group({
-      'filterPoint': ['', Validators.compose([
-        Validators.required, this.filterPointValidator])]
-    });
 
-    this.filterPoint = this.filterForm.controls['filterPoint'];
   }
   @HostListener('window:mousedown', ['$event']) click(event) {
     if (this.lastSelectedMarker.marker) {
@@ -110,38 +104,5 @@ export class MainComponent implements OnInit {
       }
     }
   }
-
-  filter(filterValue) {
-
-    this.db.forEach((item: Point) => {
-      this.map.removeLayer(item.marker);
-      if (item.name.match(filterValue.filterPoint)) {
-        this.map.addLayer(item.marker);
-        item.isFiltered = true;
-      } else {
-        item.isFiltered = false;
-      }
-    });
-  }
-
-  resetFilter() {
-    this.db.forEach((item: Point, index: number) => {
-      this.map.removeLayer(this.db[index].marker);
-      item.isFiltered = true;
-    });
-    this.initPoints();
-  }
-
-
-  filterPointValidator(control: FormControl): { [s: string]: boolean } {
-    if (!control.value.match(/^name/)) {
-      return { invalidFilterPoint: true };
-    }
-  }
-
-
-
-
-
 
 }

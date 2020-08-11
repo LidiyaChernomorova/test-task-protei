@@ -1,0 +1,21 @@
+<form [formGroup]="filterForm" (ngSubmit)="filter(filterForm.value)">
+    <div [class.error]="!filterPoint.valid && filterPoint.touched">
+      <label for="filterPointInput"><h1>Filter points</h1></label>
+      <input
+        id="filterPointInput"
+        placeholder="start typing"
+        [formControl]="filterPoint"
+      />
+      <div *ngIf="filterPoint.dirty">
+        <div *ngIf="!filterPoint.valid">value is invalid</div>
+        <div *ngIf="filterPoint.hasError('required')">
+          value is required
+        </div>
+        <div *ngIf="filterPoint.hasError('invalidFilterPoint')">
+          value must begin with <b>'name'</b>
+        </div>
+      </div>
+    </div>
+    <button type="submit">filter points</button>
+  </form>
+  <button (click)="resetFilter()">reset filter</button>

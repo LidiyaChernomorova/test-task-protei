@@ -12,7 +12,6 @@ export class MapComponent implements AfterViewInit, OnDestroy {
 
   @Input() db: Point[];
   @Input() map: L.map;
-  @Input() selectedItemId: number;
   @Output() selectedPoint = new EventEmitter<Point>();
   @Output() deletedPoint = new EventEmitter<Point>();
   @Output() clickOnMap = new EventEmitter<Point>();
