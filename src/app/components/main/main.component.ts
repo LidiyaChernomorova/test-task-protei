@@ -36,10 +36,17 @@ export class MainComponent implements OnInit {
 
   }
   @HostListener('window:mousedown', ['$event']) click(event) {
-    if (this.lastSelectedMarker.marker) {
-      this.lastSelectedMarker.marker._icon.src = '../../../assets/maps/marker-icon.png';
-      if (event.srcElement.nodeName !== 'BUTTON') {
-        this.selectedItemId = -1;
+    const nodeSrc = event.target.attributes[0].nodeValue;
+    if (event.target.id === 'map' || event.target.nodeName === 'LI' || event.target.nodeName === 'IMG') {
+      if (this.lastSelectedMarker.marker) {
+        if (nodeSrc.slice(-12, nodeSrc.length) === 'selected.png' || event.path[2].classList[0] === 'nameSected') {
+          this.lastSelectedMarker.marker._icon.src = '../../../assets/maps/marker-icon-selected.png';
+        } else {
+          this.lastSelectedMarker.marker._icon.src = '../../../assets/maps/marker-icon.png';
+        }
+        if (event.srcElement.nodeName !== 'BUTTON') {
+          this.selectedItemId = -1;
+        }
       }
     }
   }
@@ -51,11 +58,13 @@ export class MainComponent implements OnInit {
   }
 
   initPoints() {
+    this.lastSelectedMarker = {};
     this.db.forEach((item: Point, index: number) =>
       this.createPoint(item, true, index));
   }
 
   clickOnMap(event) {
+    console.log('click')
     const node: any = event.originalEvent.target;
     if (node.className === 'leaflet-marker-icon leaflet-zoom-animated leaflet-interactive') {
       const index = this.findIndexInDB(this.db, this.selectedId);
