@@ -1,7 +1,8 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { Point } from '../../interfaces/point.model';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import * as L from 'leaflet';
 import { FormBuilder, FormGroup, Validators, AbstractControl, FormControl } from '@angular/forms';
+import { Point } from '../../interfaces/point.model';
+import { FilterValue } from '../../interfaces/filter-value.model';
 
 
 @Component({
@@ -9,7 +10,7 @@ import { FormBuilder, FormGroup, Validators, AbstractControl, FormControl } from
   templateUrl: './filter.component.html',
   styleUrls: ['./filter.component.css']
 })
-export class FilterComponent implements OnInit {
+export class FilterComponent {
 
   @Input() db: Point[];
   @Input() map: L.map;
@@ -27,7 +28,7 @@ export class FilterComponent implements OnInit {
     this.filterPoint = this.filterForm.controls['filterPoint'];
   }
 
-  filter(filterValue) {
+  filter(filterValue: FilterValue) {
     this.db.forEach((item: Point) => {
       this.map.removeLayer(item.marker);
       if (item.name.match(filterValue.filterPoint)) {

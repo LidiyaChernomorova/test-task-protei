@@ -6,7 +6,7 @@ import { MainComponent } from './components/main/main.component';
 import { ListComponent } from './components/list/list.component';
 import { MapComponent } from './components/map/map.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { FilterComponent } from './filter/filter.component';
+import { FilterComponent } from './components/filter/filter.component';
 
 @NgModule({
   declarations: [
